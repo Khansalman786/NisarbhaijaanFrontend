@@ -2,18 +2,12 @@
 <html>
 
 <head>
-
     <title>Payout Dashboard</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: Segoe UI, Roboto, Arial;
-        }
-
         body {
+            font-family: Arial;
             background: #f3f6fb;
-            margin: 0;
             padding: 30px;
         }
 
@@ -21,108 +15,46 @@
             max-width: 1400px;
             margin: auto;
             background: white;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            padding: 25px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #333;
         }
 
         .controls {
             display: flex;
             gap: 10px;
-        }
-
-        .search {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            width: 260px;
+            margin-bottom: 20px;
         }
 
         .btn {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 6px;
             background: #2563eb;
             color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: 500;
         }
 
-        .btn:hover {
-            background: #1e4fd1;
-        }
-
-        .table-container {
-            overflow: auto;
-            border-radius: 8px;
-            border: 1px solid #eee;
+        .search {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
         }
 
         th {
             background: #111827;
             color: white;
-            padding: 10px;
-            text-align: left;
-            position: sticky;
-            top: 0;
-            text-wrap: nowrap;
-            border: 1px solid white;
-            text-align: center;
-        }
-
-        td {
-            padding: 8px 4px;
-            text-wrap: nowrap;
-            border: 1px solid rgb(45, 45, 45);
-            text-align: center;
-        }
-
-        tr:hover {
-            background: #f7f9fc;
-        }
-
-        .status-success {
-            background: #e7f7ee;
-            color: #15803d;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-failed {
-            background: #fde8e8;
-            color: #b91c1c;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 40px;
-            font-size: 16px;
-            color: #777;
         }
     </style>
 
@@ -132,38 +64,32 @@
 
     <div class="dashboard">
 
-        <div class="header">
+        <h2>💳 Payout Dashboard</h2>
 
-            <div class="title">💳 Payout Dashboard</div>
+        <div class="controls">
 
-            <div class="controls">
-                <input type="file" id="csv" >
+            <input type="file" id="excelFile" accept=".xlsx,.xls,.csv">
 
-                <input class="search" type="text" id="search" placeholder="Search payoutId">
+            <button class="btn" onclick="processFile()">Submit</button>
 
-                <button class="btn" onclick="exportExcel()">Export Excel</button>
+            <input class="search" id="search" placeholder="Search">
 
-            </div>
-
-        </div>
-
-        <div class="table-container">
-
-            <table id="payoutTable">
-
-                <thead id="tableHead"></thead>
-
-                <tbody id="tableBody">
-
-                    <tr>
-                        <td colspan="20" class="loader">Loading payout data...</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
+            <button class="btn" onclick="exportExcel()">Export Excel</button>
 
         </div>
+
+        <div id="countRow" style="margin-bottom:8px;font-weight:bold"></div>
+        <table id="payoutTable">
+
+            <thead id="tableHead"></thead>
+
+            <tbody id="tableBody">
+                <tr>
+                    <td>Upload Excel and click Submit</td>
+                </tr>
+            </tbody>
+
+        </table>
 
     </div>
 
