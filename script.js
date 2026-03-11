@@ -87,7 +87,19 @@ async function processFile() {
     console.log("rendering", data.length, "rows");
     tableBody.innerHTML = "";
 
+    // all keys present in data rows
     const columns = Array.from(new Set(data.flatMap((r) => Object.keys(r))));
+
+    // display labels as final name only (drop any prefix and array indices)
+    const display = columns.map((c) => {
+      let d = c.replace(/^result\./, "");
+      // remove numeric indexes like [0]
+      d = d.replace(/\[[0-9]+\]/g, "");
+      // keep text after last dot
+      const idx = d.lastIndexOf(".");
+      if (idx !== -1) d = d.slice(idx + 1);
+      return d;
+    });
 
     // show total count above table if desired
     const countRow = document.getElementById("countRow");
@@ -97,7 +109,7 @@ async function processFile() {
 
     /* create table header */
     tableHead.innerHTML =
-      "<tr>" + columns.map((col) => `<th>${col}</th>`).join("") + "</tr>";
+      "<tr>" + display.map((col) => `<th>${col}</th>`).join("") + "</tr>";
 
     /* create table rows */
     data.forEach((row) => {
